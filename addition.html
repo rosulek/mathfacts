@@ -1,0 +1,98 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Addition facts</title>
+    
+    <link rel="stylesheet" href="math.css">
+    
+    <script src="jquery-1.11.0.min.js"></script>
+    <script type="text/javascript">
+
+    var transend = "transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd";
+    var animend = "webkitAnimationEnd oanimationend msAnimationEnd animationend";
+
+    var success = function () {
+        $(".equation").addClass("success").one(animend, function(){
+            newprob();
+            return false;
+        });
+    };
+    var fail = function () { 
+        var already = 0;
+        $("#result").addClass("fail");
+    };
+    var newprob = function () {
+        console.log("asdf");
+        $(".equation").removeClass("success");
+        $("#result").text("");
+
+        $("#line1").text( Math.floor( Math.random()*19 ) );
+        $("#line2").text( Math.floor( Math.random()*10 ) );
+
+    };
+
+    $(function() {
+
+        $("#numpad").on("click", "button", function(e) {
+            var id = e.target.id;
+            var txt = $("#result").text();
+            if (id == "back") {
+                txt = txt.substr(0, txt.length-1);
+            } else {
+                txt += id.substr(1,1);
+            }
+            $("#result").text(txt);
+            $("#result").removeClass("fail");
+        });
+
+        $("#ok").on("click", function() {
+            if ( parseInt( $("#line1").text() )
+                  + parseInt( $("#line2").text() )
+                     == parseInt( $("#result").text() )) {
+                success();
+            } else {
+                fail();
+            }
+        });
+
+        newprob();
+
+    });
+
+    </script>
+  </head>
+
+  <body>
+    
+    <div id="container">
+
+        <div class="equation stacked">
+            <span class="line" id="line1">1</span>
+            <span class="line plus" id="line2">1</span>
+            <span class="result line" id="result">2</span>
+        </div>
+        
+        <div id="buttons">
+            <div id="numpad">
+                <button id="b1">1</button>
+                <button id="b2">2</button>
+                <button id="b3">3</button>
+                <button id="b4">4</button>
+                <button id="b5">5</button>
+                <button id="b6">6</button>
+                <button id="b7">7</button>
+                <button id="b8">8</button>
+                <button id="b9">9</button>
+                <span class="spacer"></span>
+                <button id="b0">0</button>
+                <button id="back">&larrhk;</button>
+            </div>
+
+            <div id="controls">
+                <button id="ok">ok</button>
+            </div>
+        </div>
+    </div>
+
+  </body>
+</html>
