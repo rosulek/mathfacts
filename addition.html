@@ -11,6 +11,8 @@
     var transend = "transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd";
     var animend = "webkitAnimationEnd oanimationend msAnimationEnd animationend";
 
+    var currprob = {};
+
     var success = function () {
         $(".equation").addClass("success").one(animend, function(){
             newprob();
@@ -22,33 +24,53 @@
         $("#result").addClass("fail");
     };
     var newprob = function () {
-        console.log("asdf");
         $(".equation").removeClass("success");
         $("#result").text("");
 
-        $("#line1").text( Math.floor( Math.random()*19 ) );
-        $("#line2").text( Math.floor( Math.random()*10 ) );
+        currprob.line1 = Math.floor( Math.random()*19 );
+        currprob.line2 = Math.floor( Math.random()*10 );
+        currprob.answer = currprob.line1 + currprob.line2;
 
+        $("#line1").text( currprob.line1 );
+        $("#line2").text( currprob.line2 );
     };
 
     $(function() {
 
         $("#numpad").on("click", "button", function(e) {
             var id = e.target.id;
-            var txt = $("#result").text();
+            var txt = $("#result").html().replace(/&nbsp;/g, "");
+
             if (id == "back") {
                 txt = txt.substr(0, txt.length-1);
             } else {
                 txt += id.substr(1,1);
             }
-            $("#result").text(txt);
+
+            var padding = ("" + currprob.answer).length - txt.length;
+            for (var i=0; i<padding; i++) {
+                txt += "&nbsp;";
+            }
+
+            $("#result").html(txt);
             $("#result").removeClass("fail");
         });
 
+        $("body").on("keydown", function(e) {
+            var k = e.which;
+
+            if (k >= 48 && k <= 57)
+                $("#b" + (k-48)).trigger("click");
+            if (k == 13)
+                $("#ok").trigger("click");
+            if (k == 8)
+                $("#back").trigger("click");
+
+            e.preventDefault();
+        });
+
         $("#ok").on("click", function() {
-            if ( parseInt( $("#line1").text() )
-                  + parseInt( $("#line2").text() )
-                     == parseInt( $("#result").text() )) {
+            if ( currprob.answer == parseInt( $("#result").text() ) ) {
                 success();
             } else {
                 fail();
