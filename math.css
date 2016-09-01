@@ -1,16 +1,33 @@
+html, body, div, span,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, b, u, i, center,
+dl, dt, dd, ol, ul, li {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
 body {
-    margin: 0px;
-    padding: 0px;
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
 }
 
+/* end reset */
+
 #container {
-    margin: 1em;
+    padding: 1em;
     text-align: center;
+    box-sizing: border-box;
+    max-width: 100% !important;
 }
 
 .equation {
     font-family: monospace;
-    font-size: 5em;
+    font-size: 4em;
 }
 
 .equation.stacked {
@@ -40,7 +57,7 @@ body {
 }
 
 #numpad, #controls {
-    max-width: 20em;
+    max-width: 17em;
     margin: 1em auto 0 auto;
     display: block;
     text-align: center;  
@@ -48,14 +65,13 @@ body {
 
 #buttons button {
     height: 2em;
-    font-size: 2em;
+    font-size: 1.8em;
     margin: 0px;
 }
 
 #numpad button, #numpad .spacer {
     width: 33%;
     display: inline-block;
-    float: left;
     min-height: 1em; /* for spacer */
 }
 
