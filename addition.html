@@ -12,6 +12,12 @@
     var animend = "webkitAnimationEnd oanimationend msAnimationEnd animationend";
 
     var currprob = {};
+    var config   = {
+        'line1min': 1,
+        'line1max': 19,
+        'line2min': 1,
+        'line2max': 9
+    };
 
     var success = function () {
         $(".equation").addClass("success").one(animend, function(){
@@ -19,16 +25,20 @@
             return false;
         });
     };
-    var fail = function () { 
-        var already = 0;
+    var fail = function () {
         $("#result").addClass("fail");
     };
+    var samprange = function(lo,hi) {
+        lo = parseInt(lo);
+        hi = parseInt(hi); /* did i mention i hate javascript? */
+        return Math.floor( lo + Math.random()*(hi-lo) );
+    }
     var newprob = function () {
         $(".equation").removeClass("success");
         $("#result").text("");
 
-        currprob.line1 = Math.floor( Math.random()*19 );
-        currprob.line2 = Math.floor( Math.random()*10 );
+        currprob.line1 = samprange( config.line1min, config.line1max );
+        currprob.line2 = samprange( config.line2min, config.line2max );
         currprob.answer = currprob.line1 + currprob.line2;
 
         $("#line1").text( currprob.line1 );
@@ -36,6 +46,13 @@
     };
 
     $(function() {
+
+        /* parse query string */
+        var terms = window.location.search.substr(1).split('&');
+        for (var i=0; i<terms.length; i++) {
+            var stuff = terms[i].split('=');
+            config[ decodeURIComponent(stuff[0]) ] = decodeURIComponent(stuff[1]);
+        }
 
         $("#numpad").on("click", "button", function(e) {
             var id = e.target.id;
@@ -61,10 +78,12 @@
 
             if (k >= 48 && k <= 57)
                 $("#b" + (k-48)).trigger("click");
-            if (k == 13)
+            else if (k == 13)
                 $("#ok").trigger("click");
-            if (k == 8)
+            else if (k == 8)
                 $("#back").trigger("click");
+            else
+                return true;
 
             e.preventDefault();
         });
@@ -78,7 +97,6 @@
         });
 
         newprob();
-
     });
 
     </script>
