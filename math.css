@@ -25,6 +25,10 @@ ol, ul {
     max-width: 100% !important;
 }
 
+#controls {
+    display: none;
+}
+
 .equation {
     font-family: monospace;
     font-size: 4em;
@@ -39,8 +43,11 @@ ol, ul {
     text-align: right;
 }
 
-.stacked .plus:before {
+.stacked .add:before {
     content: "+ ";
+}
+.stacked .subtract:before {
+    content: "- ";
 }
 
 .stacked span.result {
@@ -105,4 +112,14 @@ ol, ul {
     transition: all 0.4s ease;
     color: #ee0000;
     text-shadow: 0 0 0.5em #ee0000;
+}
+
+#config {
+    height: 90%;
+}
+#config form {
+    padding-top: 3em;
+}
+#configop, #configsubmit {
+    font-size: 1.8em;
 }
