@@ -49,6 +49,9 @@ ol, ul {
 .stacked .subtract:before {
     content: "- ";
 }
+.stacked .multiply:before {
+    content: "\d7\20";
+}
 
 .stacked span.result {
     border-top: 3px solid black;
@@ -117,9 +120,10 @@ ol, ul {
 #config {
     height: 90%;
 }
+#config, #configop, #configsubmit {
+    font-size: 1.8em;
+}
 #config form {
     padding-top: 3em;
 }
-#configop, #configsubmit {
-    font-size: 1.8em;
-}
+

@@ -20,7 +20,8 @@
     };
     var validops = {
         'add': 1,
-        'subtract': 1
+        'subtract': 1,
+        'multiply': 1,
     };
 
     var success = function () {
@@ -51,6 +52,10 @@
                 currprob.line2 = samprange( config.line2min, config.line2max );
             } while (currprob.line1 < currprob.line2);
             currprob.answer = currprob.line1 - currprob.line2;
+        } else if (config.op == "multiply") {
+            currprob.line1 = samprange( config.line1min, config.line1max );
+            currprob.line2 = samprange( config.line2min, config.line2max );
+            currprob.answer = currprob.line1 *   currprob.line2;
         }
 
         $("#line1").text( currprob.line1 );
@@ -162,6 +167,7 @@
             <select name="op" id="configop">
                 <option value="add">addition</option>
                 <option value="subtract">subtraction</option>
+                <option value="multiply">multiplication</option>
             </select>
             <input type=submit value="Go!" id="configsubmit">
         </form>
